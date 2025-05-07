@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Endless Roller</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    #instrucciones {
+      position: absolute;
+      width: 100%;
+      height: 100vh;
+      background: #111;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      animation: fadeIn 1s ease;
+    }
+
+    #instrucciones h1 {
+      font-size: 3rem;
+      color: #0f0;
+      text-shadow: 0 0 12px #0f0;
+      margin-bottom: 20px;
+    }
+
+    #instrucciones p {
+      max-width: 600px;
+      font-size: 1.1rem;
+      color: #ccc;
+      margin: 5px 0;
+    }
+
+    #instrucciones strong {
+      color: #fff;
+    }
+
+    #instrucciones button {
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #0f0;
+      color: #000;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 30px;
+      box-shadow: 0 0 10px #0f0;
+      transition: all 0.3s ease;
+    }
+
+    #instrucciones button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px #0f0;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Pantalla de instrucciones -->
+  <div id="instrucciones">
+    <h1>¡Bienvenido a PinoBola Run!</h1>
+    <p>
+      Usa las flechas izquierda y derecha para moverte.<br>
+      Evita los árboles en el camino.<br>
+      <strong>Si chocas contra 5 pinos... pierdes.</strong>
+    </p>
+    <button onclick="iniciarJuego()">Iniciar Juego</button>
+  </div>
+
+  <!-- Contenedor del juego -->
+  <div id="TutContainer" style="display: none;"></div>
+
+  <script>
+    console.log("Inicio cargado correctamente");
+
+    function iniciarJuego() {
+      console.log("Juego iniciado");
+      document.getElementById('instrucciones').style.display = 'none';
+      document.getElementById('TutContainer').style.display = 'block';
+
+      const scripts = [
+        "lib/three.min.js",
+        "lib/stats.min.js",
+        "src/OrbitControls.js",
+        "src/endlessrollerv.js"  // Asegúrate que este nombre coincida con el archivo real
+      ];
+
+      function cargarScripts(index = 0) {
+        if (index >= scripts.length) return;
+        const script = document.createElement('script');
+        script.src = scripts[index];
+        script.onload = () => cargarScripts(index + 1);
+        document.body.appendChild(script);
+      }
+
+      cargarScripts();
+    }
+  </script>
+
+</body>
+</html>
